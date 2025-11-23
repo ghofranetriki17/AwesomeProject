@@ -5,33 +5,41 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import AppTemplate from './src/templates/AppTemplate';
+import ScreenTemplate from './src/templates/ScreenTemplate';
+import Input from './src/components/Input';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <AppTemplate>
+      <ScreenTemplate>
+        <View style={styles.inputContainer}>
+          <Input 
+            placeholder="Email" 
+            value={email}
+            onChangeText={setEmail}
+          />
+          <Input 
+            placeholder="Password" 
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        <AppContent />
+      </ScreenTemplate>
+    </AppTemplate>
   );
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      <Text style={styles.text}>ghofrane</Text>
     </View>
   );
 }
@@ -39,6 +47,15 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainer: {
+    padding: 20,
+    width: '100%',
+  },
+  text: {
+    fontSize: 20,
   },
 });
 
