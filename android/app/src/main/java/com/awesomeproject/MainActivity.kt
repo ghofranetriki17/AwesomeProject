@@ -1,4 +1,6 @@
 package com.awesomeproject
+import android.os.Bundle
+import com.swmansion.rnscreens.fragment.restoration.RNScreensFragmentFactory
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

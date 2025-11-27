@@ -5,6 +5,9 @@ import ScreenTemplate from './src/templates/ScreenTemplate';
 import Input from './src/components/Input';
 import TouchableButton from './src/components/TouchableButton';
 import LoginPage from './src/screens/Login Page';
+import { NavigationContainer } from '@react-navigation/native';
+import PublicNavigation from './src/navigation/PublicNavigation';
+import AppNavigation from './src/navigation/AppNavigation';
 
 function App() {
   const [email, setEmail] = React.useState('');
@@ -17,14 +20,13 @@ function App() {
 
   return (
     <AppTemplate>
-      <ScreenTemplate>
-              <LoginPage>
-                
-              </LoginPage>
+       <NavigationContainer>
 
-      </ScreenTemplate>
+      <AppNavigation/>
+
+    </NavigationContainer>
     </AppTemplate>
-  );
+  );//hatina haka khater fl installation kali neshak save area provider
 }
 
 const styles = StyleSheet.create({
