@@ -1,46 +1,29 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import AppTemplate from './src/templates/AppTemplate';
 import ScreenTemplate from './src/templates/ScreenTemplate';
 import Input from './src/components/Input';
+import TouchableButton from './src/components/TouchableButton';
+import LoginPage from './src/screens/Login Page';
 
 function App() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const handleSubmit = () => {
+    console.log('Email:', email);
+    console.log('Password:', password);
+  };
+
   return (
     <AppTemplate>
       <ScreenTemplate>
-        <View style={styles.inputContainer}>
-          <Input 
-            placeholder="Email" 
-            value={email}
-            onChangeText={setEmail}
-          />
-          <Input 
-            placeholder="Password" 
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
-        <AppContent />
+              <LoginPage>
+                
+              </LoginPage>
+
       </ScreenTemplate>
     </AppTemplate>
-  );
-}
-
-function AppContent() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>ghofrane</Text>
-    </View>
   );
 }
 
@@ -49,13 +32,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
   },
-  inputContainer: {
-    padding: 20,
-    width: '100%',
+  form: {
+    width: '80%',
   },
-  text: {
-    fontSize: 20,
+  spacer: {
+    height: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
   },
 });
 

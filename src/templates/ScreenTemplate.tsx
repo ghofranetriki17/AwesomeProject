@@ -12,7 +12,7 @@ function ScreenTemplate(props: PropsWithChildren) {
         paddingBottom: insets.bottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
-        backgroundColor: 'red',
+        backgroundColor: 'blue',
         flex: 1,
       }}
     >
