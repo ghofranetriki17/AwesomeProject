@@ -1,27 +1,33 @@
-// stack public
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import LoginPage from "../screens/Login Page";
+import HomePage from "../screens/HomePage";
 
-const PublicStack = createNativeStackNavigator();
+// Typage du stack pour TS
+export type PublicStackParamList = {
+  Login: undefined;
+  Home: undefined;
+};
+
+const PublicStack = createNativeStackNavigator<PublicStackParamList>();
 
 export default function PublicNavigation() {
   return (
     <PublicStack.Navigator
-      initialRouteName={"Login"}
+      initialRouteName="Login"
       screenOptions={{
         headerShown: false,
-        animation: "fade", // ou "slide_from_right", "simple_push"...
+        animation: "fade",
       }}
     >
       <PublicStack.Screen
-        name={"Login"}
-        key={0}
+        name="Login"
         component={LoginPage}
-        options={{
-          header:() =>null,
-        }}
-        initialParams={{undefined }}
+        options={{ header: () => null }}
+      />
+      <PublicStack.Screen
+        name="Home"
+        component={HomePage}
+        options={{ headerShown: true, title: "Accueil" }}
       />
     </PublicStack.Navigator>
   );

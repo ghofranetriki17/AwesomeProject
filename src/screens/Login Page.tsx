@@ -1,44 +1,56 @@
+// src/screens/LoginPage.tsx
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import ScreenTemplate from '../templates/ScreenTemplate';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import Input from '../components/Input';
 import TouchableButton from '../components/TouchableButton';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { PublicStackParamList } from '../navigation/PublicNavigation';
+
+// Typage du hook navigation
+type LoginScreenProp = NativeStackNavigationProp<PublicStackParamList, 'Login'>;
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const navigation = useNavigation<LoginScreenProp>();
+
   const handleSubmit = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
+    if (email === 'ghofrane@gmail.com' && password === '1742') {
+      Alert.alert('Succès', 'Connexion réussie !');
+      navigation.navigate('Home'); 
+    } else {
+      Alert.alert('Erreur', 'Email ou mot de passe incorrect.');
+    }
   };
 
   return (
-      <View style={styles.container}>
-        <View style={styles.form}>
-          <Text style={styles.title}>Login</Text>
-          
-          <Input
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-          />
-          
-          <View style={styles.spacer} />
-          
-          <Input
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-          />
-          
-          <TouchableButton
-            title="Submit"
-            onPress={handleSubmit}
-          />
-        </View>
+    <View style={styles.container}>
+      <View style={styles.form}>
+        <Text style={styles.title}>Login</Text>
+
+        <Input
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+
+        <View style={styles.spacer} />
+
+        <Input
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+
+        <TouchableButton
+          title="Submit"
+          onPress={handleSubmit}
+        />
       </View>
+    </View>
   );
 }
 
