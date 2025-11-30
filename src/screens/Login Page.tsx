@@ -1,25 +1,21 @@
-// src/screens/LoginPage.tsx
 import React from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import Input from '../components/Input';
 import TouchableButton from '../components/TouchableButton';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { PublicStackParamList } from '../navigation/PublicNavigation';
 
-// Typage du hook navigation
-type LoginScreenProp = NativeStackNavigationProp<PublicStackParamList, 'Login'>;
+interface LoginPageProps {
+  onLogin: () => void;
+}
 
-function LoginPage() {
+export default function LoginPage({ onLogin }: LoginPageProps) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const navigation = useNavigation<LoginScreenProp>();
-
   const handleSubmit = () => {
+    // Votre logique de connexion statique
     if (email === 'ghofrane@gmail.com' && password === '1742') {
       Alert.alert('Succès', 'Connexion réussie !');
-      navigation.navigate('Home'); 
+      onLogin(); // Déclenche la navigation vers MainTabs
     } else {
       Alert.alert('Erreur', 'Email ou mot de passe incorrect.');
     }
@@ -75,5 +71,3 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 });
-
-export default LoginPage;

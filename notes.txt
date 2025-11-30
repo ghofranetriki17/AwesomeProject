@@ -2,3 +2,5 @@
 
 npx react-native run-android
  S C:\Users\ghofr\reactnativecli\AwesomeProject> npx react-native run-android
+ app icon tjm tkoun care wla ronde fi android 
+ objectif ecran de demarrage ino lapp takad tloadi wakt hwa thaher entretemps

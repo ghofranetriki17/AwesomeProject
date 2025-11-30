@@ -1,6 +1,8 @@
 package com.awesomeproject
 import android.os.Bundle
 import com.swmansion.rnscreens.fragment.restoration.RNScreensFragmentFactory
+import com.facebook.react.ReactActivity;
+import com.zoontek.rnbootsplash.RNBootSplash
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -11,6 +13,8 @@ class MainActivity : ReactActivity() {
 
 
    override fun onCreate(savedInstanceState: Bundle?) {
+        RNBootSplash.init(this, R.style.BootTheme) // ⬅️ initialize the splash screen
+
     supportFragmentManager.fragmentFactory = RNScreensFragmentFactory()
     super.onCreate(savedInstanceState)
   }
