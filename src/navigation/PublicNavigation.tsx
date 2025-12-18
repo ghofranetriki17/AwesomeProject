@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LoginPage from "../screens/Login Page";
 import HomePage from "../screens/HomePage";
 import FavoritePage from "../screens/FavoritePage";
@@ -31,12 +32,15 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#6F4E37',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#2F4B26', // Green when active
+        tabBarInactiveTintColor: '#9B9B9B', // Gray when inactive
         tabBarStyle: {
           paddingBottom: 5,
           paddingTop: 5,
           height: 60,
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 1,
+          borderTopColor: '#E0E0E0',
         },
       }}
     >
@@ -46,7 +50,10 @@ function MainTabs() {
         options={{ 
           tabBarLabel: 'Home',
           headerShown: true,
-          title: 'Accueil'
+          title: 'Accueil',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -55,7 +62,10 @@ function MainTabs() {
         options={{ 
           tabBarLabel: 'Favorites',
           headerShown: true,
-          title: 'Favoris'
+          title: 'Favoris',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="favorite" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -64,7 +74,10 @@ function MainTabs() {
         options={{ 
           tabBarLabel: 'Cart',
           headerShown: true,
-          title: 'Panier'
+          title: 'Panier',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="shopping-cart" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -73,7 +86,10 @@ function MainTabs() {
         options={{ 
           tabBarLabel: 'Profile',
           headerShown: true,
-          title: 'Profil'
+          title: 'Profil',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="person" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
