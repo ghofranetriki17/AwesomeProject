@@ -9,22 +9,23 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { USER } from "../data/data";
+import { useApp } from "../context/AppContext";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { PublicStackParamList } from "../navigation/PublicNavigation";
 
 type Navigation = NativeStackNavigationProp<PublicStackParamList>;
 
 const menuItems = [
-  { icon: "receipt", label: "My Orders" },
-  { icon: "payment", label: "Payment Methods" },
-  { icon: "settings", label: "Settings" },
-  { icon: "help", label: "Help & Support" },
+  { icon: "📦", label: "My Orders" },
+  { icon: "💳", label: "Payment Methods" },
+  { icon: "⚙️", label: "Settings" },
+  { icon: "❓", label: "Help & Support" },
 ];
 
 export default function ProfilePage() {
   const navigation = useNavigation<Navigation>();
+  const { logout } = useApp();
 
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
@@ -32,7 +33,10 @@ export default function ProfilePage() {
       {
         text: "Logout",
         style: "destructive",
-        onPress: () => navigation.navigate("Login"),
+        onPress: () => {
+          logout();
+          navigation.navigate("Login");
+        },
       },
     ]);
   };
@@ -53,10 +57,10 @@ export default function ProfilePage() {
           {menuItems.map((item) => (
             <TouchableOpacity key={item.label} style={styles.menuItem} activeOpacity={0.85}>
               <View style={styles.menuLeft}>
-                <MaterialIcons name={item.icon as any} size={22} color="#2A2A2A" />
+                <Text style={styles.menuIcon}>{item.icon}</Text>
                 <Text style={styles.menuLabel}>{item.label}</Text>
               </View>
-              <MaterialIcons name="chevron-right" size={22} color="#9B9B9B" />
+              <Text style={styles.chevron}>→</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -124,6 +128,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#2A2A2A",
     fontWeight: "600",
+  },
+  menuIcon: {
+    fontSize: 18,
+  },
+  chevron: {
+    fontSize: 18,
+    color: "#9B9B9B",
   },
   logoutButton: {
     backgroundColor: "#DC143C",

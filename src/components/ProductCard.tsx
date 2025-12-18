@@ -7,7 +7,6 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Product } from "../data/data";
 
 interface ProductCardProps {
@@ -37,11 +36,9 @@ function ProductCard({
           style={styles.favoriteButton}
           activeOpacity={0.8}
         >
-          <MaterialIcons
-            name={isFavorite ? "favorite" : "favorite-border"}
-            size={22}
-            color={isFavorite ? "#DC143C" : "#2A2A2A"}
-          />
+          <Text style={[styles.emoji, { color: isFavorite ? "#DC143C" : "#2A2A2A" }]}>
+            {isFavorite ? "❤️" : "🤍"}
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -58,7 +55,7 @@ function ProductCard({
             style={styles.addButton}
             activeOpacity={0.85}
           >
-            <MaterialIcons name="add" size={18} color="#FFFFFF" />
+            <Text style={styles.addButtonText}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -98,6 +95,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 16,
   },
+  emoji: {
+    fontSize: 18,
+  },
   content: {
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -130,6 +130,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#2F4B26",
     alignItems: "center",
     justifyContent: "center",
+  },
+  addButtonText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "800",
+    lineHeight: 20,
   },
 });
 

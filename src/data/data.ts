@@ -20,7 +20,8 @@ export const USER = {
   id: "1",
   name: "Ghofrane",
   email: "ghofrane@gmail.com",
-  profileImage: "https://via.placeholder.com/80",
+  profileImage:
+    "https://scontent.ftun15-1.fna.fbcdn.net/v/t39.30808-1/483527289_627385116690791_581616115697742906_n.jpg?stp=c0.0.1536.1536a_dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_ohc=gsZlztYO5oMQ7kNvwGLdKhW&_nc_oc=AdlTSNNB0wEJy9qhgj4xkf7tciu8mlTl1DJIM2H_Fdoodd_1GcOGu0nhZqwk7E0cVQo&_nc_zt=24&_nc_ht=scontent.ftun15-1.fna&_nc_gid=wf4PNQwQJRJM823BPwYMGw&oh=00_Afki2jm6jevfCMcMDWB-2iTIHPb1pYbfeBoctdi8NB5BrA&oe=6949F318",
   location: "Tunis, Tunisia",
 };
 

@@ -8,13 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useApp } from "../context/AppContext";
 import { CartItem, PRODUCTS, getProductById } from "../data/data";
 import { PublicStackParamList } from "../navigation/PublicNavigation";
@@ -60,18 +55,16 @@ export default function ProductDetailPage() {
             onPress={() => navigation.goBack()}
             activeOpacity={0.85}
           >
-            <MaterialIcons name="arrow-back" size={22} color="#2A2A2A" />
+            <Text style={styles.iconText}>←</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.iconButton, styles.favoriteButton]}
             onPress={() => toggleFavorite(safeProduct.id)}
             activeOpacity={0.85}
           >
-            <MaterialIcons
-              name={isFavorite ? "favorite" : "favorite-border"}
-              size={22}
-              color={isFavorite ? "#DC143C" : "#2A2A2A"}
-            />
+            <Text style={[styles.iconText, { color: isFavorite ? "#DC143C" : "#2A2A2A" }]}>
+              {isFavorite ? "❤️" : "🤍"}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -161,6 +154,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5F5",
+  },
+  iconText: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#2A2A2A",
   },
   content: {
     paddingBottom: 100,

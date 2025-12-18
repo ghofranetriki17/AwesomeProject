@@ -1,11 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useApp } from "../context/AppContext";
@@ -39,7 +33,7 @@ export default function FavoritePage() {
   if (favoriteProducts.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <MaterialIcons name="local-cafe" size={64} color="#9B9B9B" />
+        <Text style={styles.emptyIcon}>☕</Text>
         <Text style={styles.emptyTitle}>No favorites yet</Text>
         <Text style={styles.emptySubtitle}>Add products to favorites from home</Text>
       </View>
@@ -83,6 +77,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 16,
     gap: 8,
+  },
+  emptyIcon: {
+    fontSize: 64,
   },
   emptyTitle: {
     fontSize: 18,

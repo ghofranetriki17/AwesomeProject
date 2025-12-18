@@ -1,15 +1,7 @@
 import React, { useMemo } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useApp } from "../context/AppContext";
 import { CATEGORIES, USER, getProductsByCategory } from "../data/data";
 import ProductCard from "../components/ProductCard";
@@ -77,19 +69,19 @@ function HomePage() {
       <View style={styles.header}>
         <Image source={{ uri: USER.profileImage }} style={styles.avatar} />
         <View style={styles.locationRow}>
-          <MaterialIcons name="location-on" size={18} color="#2F4B26" />
+          <Text style={styles.icon}>📍</Text>
           <Text style={styles.locationText}>{USER.location}</Text>
         </View>
-        <MaterialIcons name="notifications-none" size={22} color="#2A2A2A" />
+        <Text style={[styles.icon, styles.bellIcon]}>🔔</Text>
       </View>
 
       <Text style={styles.greeting}>Good morning, {USER.name}</Text>
 
       <View style={styles.searchBar}>
-        <MaterialIcons name="search" size={20} color="#9B9B9B" />
+        <Text style={styles.icon}>🔍</Text>
         <Text style={styles.searchPlaceholder}>Search Coffee...</Text>
         <View style={{ flex: 1 }} />
-        <MaterialIcons name="tune" size={20} color="#2A2A2A" />
+        <Text style={styles.icon}>⚙️</Text>
       </View>
 
       <View style={styles.section}>
@@ -153,11 +145,19 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     backgroundColor: "#E0E0E0",
+    alignItems: "center",
+    justifyContent: "center",
   },
   locationRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
+  },
+  icon: {
+    fontSize: 18,
+  },
+  bellIcon: {
+    fontSize: 22,
   },
   locationText: {
     fontSize: 14,

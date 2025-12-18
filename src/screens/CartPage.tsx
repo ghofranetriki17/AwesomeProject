@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useApp } from "../context/AppContext";
@@ -25,12 +24,10 @@ export default function CartPage() {
   const {
     cart,
     updateCartQuantity,
-    removeFromCart,
     clearCart,
     getCartSubtotal,
     getCartTotal,
     toggleFavorite,
-    favorites,
   } = useApp();
 
   const cartWithProducts = useMemo(
@@ -55,7 +52,7 @@ export default function CartPage() {
   if (cartWithProducts.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <MaterialIcons name="shopping-cart" size={64} color="#9B9B9B" />
+        <Text style={styles.emptyIcon}>🛒</Text>
         <Text style={styles.emptyTitle}>Your cart is empty</Text>
         <Text style={styles.emptySubtitle}>Add products from home</Text>
       </View>
@@ -152,6 +149,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#2A2A2A",
+  },
+  emptyIcon: {
+    fontSize: 64,
   },
   emptySubtitle: {
     fontSize: 14,

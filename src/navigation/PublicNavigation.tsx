@@ -1,13 +1,14 @@
 import React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Text } from 'react-native';
 import LoginPage from "../screens/Login Page";
 import HomePage from "../screens/HomePage";
 import FavoritePage from "../screens/FavoritePage";
 import CartPage from "../screens/CartPage";
 import ProfilePage from "../screens/ProfilePage";
 import ProductDetailPage from "../screens/ProductDetailPage";
+import { useApp } from '../context/AppContext';
 
 // Typage du stack pour TS
 export type PublicStackParamList = {
@@ -52,7 +53,7 @@ function MainTabs() {
           headerShown: true,
           title: 'Accueil',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" size={size} color={color} />
+            <Text style={{ fontSize: size, color }}>🏠</Text>
           ),
         }}
       />
@@ -64,7 +65,7 @@ function MainTabs() {
           headerShown: true,
           title: 'Favoris',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="favorite" size={size} color={color} />
+            <Text style={{ fontSize: size, color }}>❤️</Text>
           ),
         }}
       />
@@ -76,7 +77,7 @@ function MainTabs() {
           headerShown: true,
           title: 'Panier',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="shopping-cart" size={size} color={color} />
+            <Text style={{ fontSize: size, color }}>🛒</Text>
           ),
         }}
       />
@@ -88,7 +89,7 @@ function MainTabs() {
           headerShown: true,
           title: 'Profil',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="person" size={size} color={color} />
+            <Text style={{ fontSize: size, color }}>👤</Text>
           ),
         }}
       />
@@ -97,7 +98,7 @@ function MainTabs() {
 }
 
 export default function PublicNavigation() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const { isLoggedIn, login } = useApp();
 
   return (
     <PublicStack.Navigator
@@ -116,7 +117,7 @@ export default function PublicNavigation() {
             gestureEnabled: false, // Empêche le swipe back
           }}
         >
-          {(props) => <LoginPage {...props} onLogin={() => setIsLoggedIn(true)} />}
+          {(props) => <LoginPage {...props} onLogin={() => login()} />}
         </PublicStack.Screen>
       ) : (
         //login screen mahouch fmain tabs 

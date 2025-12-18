@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { CartItem as CartItemType, Product } from "../data/data";
 
 interface CartItemProps {
@@ -30,7 +29,7 @@ function CartItem({
         <View style={styles.infoHeader}>
           <Text style={styles.name}>{product.name}</Text>
           <TouchableOpacity onPress={onToggleFavorite} hitSlop={8}>
-            <MaterialIcons name="favorite-border" size={20} color="#2A2A2A" />
+            <Text style={styles.heart}>🤍</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.description}>{product.description}</Text>
@@ -43,11 +42,11 @@ function CartItem({
         <Text style={styles.price}>{priceLabel}</Text>
         <View style={styles.quantityRow}>
           <TouchableOpacity style={styles.qtyButton} onPress={handleDecrease}>
-            <MaterialIcons name="remove" size={18} color="#2A2A2A" />
+            <Text style={styles.qtyIcon}>-</Text>
           </TouchableOpacity>
           <Text style={styles.quantity}>{cartItem.quantity}</Text>
           <TouchableOpacity style={styles.qtyButton} onPress={handleIncrease}>
-            <MaterialIcons name="add" size={18} color="#2A2A2A" />
+            <Text style={styles.qtyIcon}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -101,6 +100,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     gap: 8,
   },
+  heart: {
+    fontSize: 18,
+  },
   price: {
     fontSize: 14,
     fontWeight: "700",
@@ -120,6 +122,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
+  },
+  qtyIcon: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#2A2A2A",
   },
   quantity: {
     minWidth: 20,

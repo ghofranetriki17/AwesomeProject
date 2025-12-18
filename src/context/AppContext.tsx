@@ -1,10 +1,18 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CartItem, PRODUCTS } from "../data/data";
 
 type AppState = {
   favorites: string[];
   cart: CartItem[];
   selectedCategory: string;
+  isLoggedIn: boolean;
   toggleFavorite: (productId: string) => void;
   addToCart: (
     productId: string,
@@ -18,6 +26,8 @@ type AppState = {
   setSelectedCategory: (category: string) => void;
   getCartSubtotal: () => number;
   getCartTotal: () => number;
+  login: () => void;
+  logout: () => void;
 };
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -26,6 +36,35 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const hydrate = async () => {
+      try {
+        const [favRaw, cartRaw] = await Promise.all([
+          AsyncStorage.getItem("app_favorites"),
+          AsyncStorage.getItem("app_cart"),
+        ]);
+        if (favRaw) {
+          setFavorites(JSON.parse(favRaw));
+        }
+        if (cartRaw) {
+          setCart(JSON.parse(cartRaw));
+        }
+      } catch {
+        // ignore hydration errors
+      }
+    };
+    hydrate();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem("app_favorites", JSON.stringify(favorites)).catch(() => {});
+  }, [favorites]);
+
+  useEffect(() => {
+    AsyncStorage.setItem("app_cart", JSON.stringify(cart)).catch(() => {});
+  }, [cart]);
 
   const toggleFavorite = (productId: string) => {
     setFavorites((prev) =>
@@ -87,11 +126,15 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getCartTotal = () => getCartSubtotal() - 25000;
 
+  const login = () => setIsLoggedIn(true);
+  const logout = () => setIsLoggedIn(false);
+
   const value = useMemo(
     () => ({
       favorites,
       cart,
       selectedCategory,
+      isLoggedIn,
       toggleFavorite,
       addToCart,
       updateCartQuantity,
@@ -100,8 +143,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setSelectedCategory,
       getCartSubtotal,
       getCartTotal,
+      login,
+      logout,
     }),
-    [favorites, cart, selectedCategory]
+    [favorites, cart, selectedCategory, isLoggedIn]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
