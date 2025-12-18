@@ -8,6 +8,7 @@ import LoginPage from './src/screens/Login Page';
 import { NavigationContainer } from '@react-navigation/native';
 import PublicNavigation from './src/navigation/PublicNavigation';
 import AppNavigation from './src/navigation/AppNavigation';
+import { AppProvider } from './src/context/AppContext';
 
 function App() {
   const [email, setEmail] = React.useState('');
@@ -20,11 +21,11 @@ function App() {
 
   return (
     <AppTemplate>
-       <NavigationContainer>
-
-      <AppNavigation/>
-
-    </NavigationContainer>
+      <AppProvider>
+        <NavigationContainer>
+          <AppNavigation />
+        </NavigationContainer>
+      </AppProvider>
     </AppTemplate>
   );//hatina haka khater fl installation kali neshak save area provider
 }
