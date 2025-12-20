@@ -1,0 +1,102 @@
+Project Q&A (quick prep for oral defense)
+
+1) Q: What does the app do? A: Coffee shop mobile app with browse, search, favorites, cart, and product detail flows.
+2) Q: Which framework? A: React Native 0.82 with TypeScript.
+3) Q: Navigation library? A: @react-navigation native stack + bottom tabs.
+4) Q: Initial flow? A: Welcome screen -> Login -> Main tabs after authentication.
+5) Q: State management? A: Context for cart/favorites/category and Zustand store for persisted auth.
+6) Q: Why mix Context and Zustand? A: Context holds UI/business state already built; auth was moved to Zustand for persistence without rewiring all components.
+7) Q: How is login persisted? A: Zustand store with persist middleware storing isLoggedIn in AsyncStorage.
+8) Q: How do you avoid flashing wrong screen on startup? A: Hydration flag from Zustand; navigation renders only after auth hydrate.
+9) Q: Where is auth store defined? A: src/store/authStore.ts.
+10) Q: How is AsyncStorage used? A: To persist favorites, cart, and auth login flag.
+11) Q: Where are products stored? A: Mock data in src/data/data.ts.
+12) Q: Data shape for products? A: id, name, description, price, imageUrl, category, rating, about.
+13) Q: How do categories work? A: getProductsByCategory filters by category or returns all for “All”.
+14) Q: How is search implemented? A: TextInput in HomePage filters products by name/description/category/about.
+15) Q: Where is search code? A: src/screens/HomePage.tsx.
+16) Q: What happens when search has no results? A: Empty state card with message.
+17) Q: How are favorites handled? A: IDs in Context; ProductCard toggles; FavoritePage maps IDs to products.
+18) Q: How is cart structured? A: Array of CartItem {productId, size, sugar, quantity}.
+19) Q: Cart subtotal calculation? A: Sum of price * quantity for each cart item using PRODUCTS lookup.
+20) Q: Discount/fees? A: getCartTotal returns subtotal minus 25000 (mock discount/fee).
+21) Q: How are sizes/sugar stored? A: Enum-like string union in data types.
+22) Q: What component shows a product? A: src/components/ProductCard.tsx.
+23) Q: How to prevent favorite tap from triggering navigation? A: stopPropagation on favorite button Pressable.
+24) Q: How are categories rendered? A: Horizontal ScrollView with CategoryButton components.
+25) Q: What is CategoryButton styling logic? A: Selected uses primary green background; unselected white with border.
+26) Q: How are featured vs special offers separated? A: First 3 items as featured, rest as special offers grid.
+27) Q: Which screen shows product details? A: src/screens/ProductDetailPage.tsx.
+28) Q: How is navigation typed? A: NativeStackNavigationProp with PublicStackParamList.
+29) Q: What is PublicStackParamList? A: Route types for Welcome, Login, MainTabs, ProductDetail.
+30) Q: What is TabParamList? A: Route types for Home, Favorite, Cart, Profile tabs.
+31) Q: How is initialRouteName chosen? A: Based on isLoggedIn: MainTabs if true, Welcome if false.
+32) Q: Where is that logic? A: PublicNavigation.tsx.
+33) Q: How does LoginPage signal success? A: Calls onLogin prop after basic credential check.
+34) Q: Credentials used? A: Static email ghofrane@gmail.com and password 1742.
+35) Q: What happens on logout? A: Calls logout from auth store, resets isLoggedIn to false.
+36) Q: Where is logout triggered? A: ProfilePage logout button with confirmation Alert.
+37) Q: Any external UI libraries? A: No UI kit; uses RN primitives and emojis for icons.
+38) Q: Why emojis? A: Lightweight icon fallback without vector icons dependency.
+39) Q: How are shadows handled? A: StyleSheet shadow props plus elevation for Android.
+40) Q: How are lists rendered? A: FlatList for featured/special offers and favorites; ScrollView for categories.
+41) Q: Performance considerations? A: FlatList used for virtualization; limited mock data so acceptable.
+42) Q: AsyncStorage keys? A: app_favorites, app_cart, auth_store (default from persist).
+43) Q: How does persist partialize state? A: Only isLoggedIn is stored; hydration flag set on rehydrate callback.
+44) Q: What prevents double sources of truth for auth? A: Context reads directly from Zustand store, no local auth state.
+45) Q: Could cart/favorites move to Zustand? A: Yes; would replace Context state and keep one store.
+46) Q: Why keep cart in Context now? A: Existing implementation works; change focused on auth persistence.
+47) Q: Error handling for storage? A: Hydration try/catch ignores errors; writes catch and no-op on failure.
+48) Q: How are types enforced? A: TypeScript across screens/components; types in data.ts.
+49) Q: Which Node/React versions? A: Node >=20, React 19.1.1 per package.json.
+50) Q: How to run on Android? A: npm install then npx react-native run-android.
+51) Q: How to run on iOS? A: npm install, npx pod-install (if needed), then npx react-native run-ios.
+52) Q: How is splash handled? A: react-native-bootsplash; hidden on NavigationContainer ready and in useEffect.
+53) Q: Where are images from? A: Remote Unsplash URLs in mock product data.
+54) Q: Any offline support? A: Only persisted local state; product data is static.
+55) Q: How is price formatted? A: toLocaleString in ProductCard with “Rp” prefix.
+56) Q: Currency rationale? A: Example currency; can be replaced with locale-aware formatting.
+57) Q: How to add a new category? A: Add to CATEGORIES array and ensure products use that category string.
+58) Q: How to add a new product? A: Append to PRODUCTS with matching type fields.
+59) Q: How to change discount? A: Update getCartTotal in AppContext.
+60) Q: How to add rating UI? A: Extend ProductCard and ProductDetailPage to render rating stars from product.rating.
+61) Q: How is back navigation handled from detail? A: Stack header back button by default.
+62) Q: How is tab bar styled? A: Tab.Navigator screenOptions sets colors, height, borderTop.
+63) Q: How to deep link to a product? A: Configure linking in NavigationContainer and navigate to ProductDetail with productId.
+64) Q: What happens if productId not found? A: ProductDetailPage likely handles null (check implementation).
+65) Q: Where is cart badge? A: Not implemented; can be added via tabBarBadge using cart length.
+66) Q: How is quantity updated? A: updateCartQuantity replaces quantity and filters out zero or negatives.
+67) Q: How to clear cart? A: clearCart function in context.
+68) Q: How is profile data sourced? A: USER mock object in data.ts.
+69) Q: How to change avatar? A: Update USER.profileImage URL.
+70) Q: How to change location text? A: Update USER.location string.
+71) Q: How to add theming? A: Centralize colors into a theme file and replace hardcoded hex values.
+72) Q: How to add dark mode? A: Use Appearance/ThemeContext and conditional styles.
+73) Q: Are there tests? A: None included; jest config present.
+74) Q: What should be tested? A: Store logic (cart math, auth persistence), navigation guards, search filter behavior.
+75) Q: How to mock AsyncStorage in tests? A: Use @react-native-async-storage/async-storage/jest/async-storage-mock.
+76) Q: Any native modules? A: Bootsplash and AsyncStorage; rest is JS.
+77) Q: How to handle API integration later? A: Replace PRODUCTS with fetch logic and keep UI intact.
+78) Q: How to prevent stale storage schema? A: Use versioned persist or migration in Zustand.
+79) Q: What is hasHydrated? A: Flag in auth store indicating rehydration completed.
+80) Q: What if persist fails? A: Login won’t be saved; user logs in again next launch.
+81) Q: How is login validated? A: Simple static check; replace with API call in handleSubmit.
+82) Q: How to handle token storage securely? A: Use secure storage libs instead of AsyncStorage for sensitive data.
+83) Q: Any accessibility considerations? A: Basic RN components; could add accessibilityLabel and better contrast.
+84) Q: How to internationalize? A: Introduce i18n library (e.g., i18next) and replace strings.
+85) Q: How are icons chosen? A: Emojis to avoid dependency; can swap to react-native-vector-icons.
+86) Q: What layouts are used? A: Mostly flex rows/columns, padding, gap, and ScrollView/FlatList containers.
+87) Q: How to improve performance for large lists? A: Use FlatList with keyExtractor, getItemLayout, and pagination.
+88) Q: How to handle network images? A: Current Image uses remote URLs; consider react-native-fast-image for caching.
+89) Q: How to add pull-to-refresh? A: Use FlatList refreshControl with state.
+90) Q: Does search debounce? A: No; filters on each keystroke; can wrap in useCallback with debounce if needed.
+91) Q: How to change primary color? A: Update hex in styles (e.g., #2F4B26) and CategoryButton.
+92) Q: How to add analytics? A: Hook into navigation events and button presses with analytics SDK.
+93) Q: How to handle errors globally? A: Add error boundary and toast/snackbar for user feedback.
+94) Q: How to secure API keys? A: Use env variables or native config; not applicable with mock data.
+95) Q: How to support tablets? A: Adjust card widths, use responsive layouts, maybe two-column featured.
+96) Q: How to handle orientation changes? A: Use Dimensions or useWindowDimensions to adapt layouts.
+97) Q: How to lazy load tabs? A: Tab.Navigator screenOptions lazy: true.
+98) Q: How to prefetch images? A: Use Image.prefetch on app start.
+99) Q: How to log out and clear persisted data? A: Call logout then optionally clear favorites/cart AsyncStorage keys.
+100) Q: Future improvement priority? A: Replace static auth with backend, add tests, and migrate all state to a single store.

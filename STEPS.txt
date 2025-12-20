@@ -8,6 +8,7 @@ Steps followed:
 7) Replaced vector icons with emoji/text fallbacks for compatibility (Doc: https://reactnative.dev/docs/text).
 8) Persisted favorites/cart across sessions using AsyncStorage (Doc: https://reactnative.dev/docs/asyncstorage).
 9) Enabled Home search bar to filter products by query + category with empty state feedback (Doc: https://reactnative.dev/docs/textinput).
+10) Added Zustand auth store persisted to AsyncStorage for login state and hydration guard in navigation (Doc: https://docs.pmnd.rs/zustand/integrations/persisting-store-data#react-native).
 
 Testing checklist:
 - Run app: npx react-native run-android or run-ios

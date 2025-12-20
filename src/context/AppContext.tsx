@@ -7,12 +7,14 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CartItem, PRODUCTS } from "../data/data";
+import { useAuthStore } from "../store/authStore";
 
 type AppState = {
   favorites: string[];
   cart: CartItem[];
   selectedCategory: string;
   isLoggedIn: boolean;
+  authHydrated: boolean;
   toggleFavorite: (productId: string) => void;
   addToCart: (
     productId: string,
@@ -36,7 +38,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isLoggedIn, login, logout, hasHydrated } = useAuthStore();
 
   useEffect(() => {
     const hydrate = async () => {
@@ -126,15 +128,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getCartTotal = () => getCartSubtotal() - 25000;
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
-
   const value = useMemo(
     () => ({
       favorites,
       cart,
       selectedCategory,
       isLoggedIn,
+      authHydrated: hasHydrated,
       toggleFavorite,
       addToCart,
       updateCartQuantity,
@@ -146,7 +146,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       login,
       logout,
     }),
-    [favorites, cart, selectedCategory, isLoggedIn]
+    [favorites, cart, selectedCategory, isLoggedIn, hasHydrated]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

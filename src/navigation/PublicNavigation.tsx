@@ -101,11 +101,15 @@ function MainTabs() {
 }
 
 export default function PublicNavigation() {
-  const { isLoggedIn, login } = useApp();
+  const { isLoggedIn, login, authHydrated } = useApp();
+
+  if (!authHydrated) {
+    return null;
+  }
 
   return (
     <PublicStack.Navigator
-      initialRouteName="Welcome"
+      initialRouteName={isLoggedIn ? "MainTabs" : "Welcome"}
       screenOptions={{
         headerShown: false,
         animation: "fade",
