@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/navigation | https://reactnative.dev/docs/text
 import React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,10 +9,12 @@ import FavoritePage from "../screens/FavoritePage";
 import CartPage from "../screens/CartPage";
 import ProfilePage from "../screens/ProfilePage";
 import ProductDetailPage from "../screens/ProductDetailPage";
+import WelcomeScreen from "../screens/WelcomeScreen";
 import { useApp } from '../context/AppContext';
 
 // Typage du stack pour TS
 export type PublicStackParamList = {
+  Welcome: undefined;
   Login: undefined;
   MainTabs: undefined;
   ProductDetail: { productId?: string };
@@ -27,14 +30,14 @@ export type TabParamList = {
 const PublicStack = createNativeStackNavigator<PublicStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
-// Bottom Tab Navigator nestamlouh les pages principales mouch lgin
+// Bottom Tab Navigator
 function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#2F4B26', // Green when active
-        tabBarInactiveTintColor: '#9B9B9B', // Gray when inactive
+        tabBarActiveTintColor: '#2F4B26',
+        tabBarInactiveTintColor: '#9B9B9B',
         tabBarStyle: {
           paddingBottom: 5,
           paddingTop: 5,
@@ -45,10 +48,10 @@ function MainTabs() {
         },
       }}
     >
-      <Tab.Screen 
-        name="Home" 
+      <Tab.Screen
+        name="Home"
         component={HomePage}
-        options={{ 
+        options={{
           tabBarLabel: 'Home',
           headerShown: true,
           title: 'Accueil',
@@ -57,10 +60,10 @@ function MainTabs() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Favorite" 
+      <Tab.Screen
+        name="Favorite"
         component={FavoritePage}
-        options={{ 
+        options={{
           tabBarLabel: 'Favorites',
           headerShown: true,
           title: 'Favoris',
@@ -69,10 +72,10 @@ function MainTabs() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Cart" 
+      <Tab.Screen
+        name="Cart"
         component={CartPage}
-        options={{ 
+        options={{
           tabBarLabel: 'Cart',
           headerShown: true,
           title: 'Panier',
@@ -81,10 +84,10 @@ function MainTabs() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfilePage}
-        options={{ 
+        options={{
           tabBarLabel: 'Profile',
           headerShown: true,
           title: 'Profil',
@@ -102,42 +105,50 @@ export default function PublicNavigation() {
 
   return (
     <PublicStack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Welcome"
       screenOptions={{
         headerShown: false,
         animation: "fade",
       }}
     >
       {!isLoggedIn ? (
-        // Auth Stack - Login Screen ONLY
-        <PublicStack.Screen
-          name="Login"
-          options={{ 
-            header: () => null,
-            gestureEnabled: false, // Empêche le swipe back
-          }}
-        >
-          {(props) => <LoginPage {...props} onLogin={() => login()} />}
-        </PublicStack.Screen>
+        <>
+          <PublicStack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          <PublicStack.Screen
+            name="Login"
+            options={{
+              header: () => null,
+              gestureEnabled: false,
+            }}
+          >
+            {(props) => <LoginPage {...props} onLogin={() => login()} />}
+          </PublicStack.Screen>
+        </>
       ) : (
-        //login screen mahouch fmain tabs 
         <>
           <PublicStack.Screen
             name="MainTabs"
             component={MainTabs}
-            options={{ 
+            options={{
               headerShown: false,
-              gestureEnabled: false, // matkhalikech tarjaa ll login
+              gestureEnabled: false,
             }}
           />
           <PublicStack.Screen
             name="ProductDetail"
             component={ProductDetailPage}
-            options={{ 
-              headerShown: true, 
-              title: 'Détails du Produit',
+            options={{
+              headerShown: true,
+              title: 'Details du Produit',
               headerBackTitle: 'Retour',
-              presentation: 'card', // narja btwel mn item details 
+              presentation: 'card',
             }}
           />
         </>

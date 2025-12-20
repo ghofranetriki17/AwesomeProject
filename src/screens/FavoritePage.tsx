@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/flatlist | https://reactnative.dev/docs/text | https://reactnative.dev/docs/view
 import React, { useMemo } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";

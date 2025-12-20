@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/touchableopacity | https://reactnative.dev/docs/alert | https://reactnative.dev/docs/image | https://reactnative.dev/docs/text | https://reactnative.dev/docs/view
 import React from "react";
 import {
   Alert,

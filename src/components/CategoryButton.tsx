@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/touchableopacity | https://reactnative.dev/docs/text
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 

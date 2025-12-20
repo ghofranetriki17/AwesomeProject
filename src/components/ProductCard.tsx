@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/pressable | https://reactnative.dev/docs/touchableopacity | https://reactnative.dev/docs/image | https://reactnative.dev/docs/text
 import React from "react";
 import {
   Image,

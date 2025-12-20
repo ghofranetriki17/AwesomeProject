@@ -1,3 +1,4 @@
+// Docs: https://reactnative.dev/docs/scrollview | https://reactnative.dev/docs/alert | https://reactnative.dev/docs/text | https://reactnative.dev/docs/touchableopacity | https://reactnative.dev/docs/view
 import React, { useMemo } from "react";
 import {
   Alert,
