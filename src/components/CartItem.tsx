@@ -16,7 +16,7 @@ function CartItem({
   onQuantityChange,
   onToggleFavorite,
 }: CartItemProps) {
-  const priceLabel = `Rp ${product.price.toLocaleString("en-US")}`;
+  const priceLabel = `د.ت${product.price.toLocaleString("en-US")}`;
 
   const handleDecrease = () =>
     onQuantityChange(Math.max(0, cartItem.quantity - 1));

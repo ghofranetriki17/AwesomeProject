@@ -23,7 +23,7 @@ function ProductCard({
   onPress,
   onFavoritePress,
 }: ProductCardProps) {
-  const priceLabel = `Rp ${product.price.toLocaleString("en-US")}`;
+  const priceLabel = `د.ت${product.price.toLocaleString("en-US")}`;
 
   return (
     <Pressable style={styles.card} onPress={onPress}>

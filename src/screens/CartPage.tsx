@@ -8,14 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CompositeNavigationProp, useNavigation } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useApp } from "../context/AppContext";
 import { PRODUCTS, getProductById } from "../data/data";
 import CartItem from "../components/CartItem";
-import { PublicStackParamList } from "../navigation/PublicNavigation";
+import { PublicStackParamList, TabParamList } from "../navigation/PublicNavigation";
 
-type Navigation = NativeStackNavigationProp<PublicStackParamList>;
+type Navigation = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList, "Cart">,
+  NativeStackNavigationProp<PublicStackParamList>
+>;
 
 const formatPrice = (price: number) =>
   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -88,18 +92,18 @@ export default function CartPage() {
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Subtotal</Text>
           <Text style={styles.summaryValue}>
-            Rp {formatPrice(getCartSubtotal())}
+            د.ت{formatPrice(getCartSubtotal())}
           </Text>
         </View>
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Discount</Text>
-          <Text style={styles.summaryValue}>Rp 25,000</Text>
+          <Text style={styles.summaryValue}>د.ت25,000</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.summaryRow}>
           <Text style={[styles.summaryLabel, styles.totalLabel]}>Total</Text>
           <Text style={[styles.summaryValue, styles.totalValue]}>
-            Rp {formatPrice(getCartTotal())}
+            د.ت{formatPrice(getCartTotal())}
           </Text>
         </View>
 

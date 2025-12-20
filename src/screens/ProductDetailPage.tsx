@@ -37,7 +37,7 @@ export default function ProductDetailPage() {
   const [selectedSize, setSelectedSize] = useState<CartItem["size"]>("Small");
   const [selectedSugar, setSelectedSugar] = useState<CartItem["sugar"]>("No Sugar");
 
-  const priceLabel = `Rp ${safeProduct.price.toLocaleString("en-US")}`;
+  const priceLabel = `د.ت${safeProduct.price.toLocaleString("en-US")}`;
   const isFavorite = favorites.includes(safeProduct.id);
 
   const handleAddToCart = () => {
