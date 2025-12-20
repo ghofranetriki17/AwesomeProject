@@ -7,6 +7,7 @@ Steps followed:
 6) Wrapped NavigationContainer in App.tsx and ensured splash hides on ready (Doc: https://reactnative.dev/docs/navigation-container).
 7) Replaced vector icons with emoji/text fallbacks for compatibility (Doc: https://reactnative.dev/docs/text).
 8) Persisted favorites/cart across sessions using AsyncStorage (Doc: https://reactnative.dev/docs/asyncstorage).
+9) Enabled Home search bar to filter products by query + category with empty state feedback (Doc: https://reactnative.dev/docs/textinput).
 
 Testing checklist:
 - Run app: npx react-native run-android or run-ios

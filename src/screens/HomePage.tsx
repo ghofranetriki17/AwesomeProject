@@ -1,6 +1,6 @@
 // Docs: https://reactnative.dev/docs/flatlist | https://reactnative.dev/docs/scrollview | https://reactnative.dev/docs/image | https://reactnative.dev/docs/text
-import React, { useMemo } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import React, { useMemo, useState } from "react";
+import { FlatList, ScrollView, StyleSheet, Text, View, Image, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useApp } from "../context/AppContext";
@@ -19,12 +19,21 @@ function HomePage() {
     selectedCategory,
     setSelectedCategory,
   } = useApp();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = useMemo(() => ["All", ...CATEGORIES], []);
-  const filteredProducts = useMemo(
-    () => getProductsByCategory(selectedCategory),
-    [selectedCategory]
-  );
+  const filteredProducts = useMemo(() => {
+    const products = getProductsByCategory(selectedCategory);
+    if (!searchQuery.trim()) return products;
+    const query = searchQuery.trim().toLowerCase();
+    return products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.about.toLowerCase().includes(query)
+    );
+  }, [searchQuery, selectedCategory]);
   const featuredProducts = useMemo(
     () => filteredProducts.slice(0, 3),
     [filteredProducts]
@@ -80,8 +89,16 @@ function HomePage() {
 
       <View style={styles.searchBar}>
         <Text style={styles.icon}>🔍</Text>
-        <Text style={styles.searchPlaceholder}>Search Coffee...</Text>
-        <View style={{ flex: 1 }} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Coffee..."
+          placeholderTextColor="#9B9B9B"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          autoCapitalize="none"
+          autoCorrect={false}
+          returnKeyType="search"
+        />
         <Text style={styles.icon}>⚙️</Text>
       </View>
 
@@ -96,32 +113,43 @@ function HomePage() {
         </ScrollView>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Featured</Text>
-        <FlatList
-          data={featuredProducts}
-          keyExtractor={(item) => item.id}
-          renderItem={renderFeatured}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-          contentContainerStyle={{ paddingRight: 12 }}
-        />
-      </View>
+      {filteredProducts.length === 0 ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>No products found</Text>
+          <Text style={styles.emptySubtitle}>
+            Try a different search or select another category.
+          </Text>
+        </View>
+      ) : (
+        <>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Featured</Text>
+            <FlatList
+              data={featuredProducts}
+              keyExtractor={(item) => item.id}
+              renderItem={renderFeatured}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
+              contentContainerStyle={{ paddingRight: 12 }}
+            />
+          </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Special Offer</Text>
-        <FlatList
-          data={specialOfferProducts}
-          keyExtractor={(item) => item.id}
-          renderItem={renderSpecial}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-          scrollEnabled={false}
-          ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
-          contentContainerStyle={{ paddingBottom: 12 }}
-        />
-      </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Special Offer</Text>
+            <FlatList
+              data={specialOfferProducts}
+              keyExtractor={(item) => item.id}
+              renderItem={renderSpecial}
+              numColumns={2}
+              columnWrapperStyle={{ justifyContent: "space-between" }}
+              scrollEnabled={false}
+              ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
+              contentContainerStyle={{ paddingBottom: 12 }}
+            />
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -183,10 +211,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
-  searchPlaceholder: {
+  searchInput: {
+    flex: 1,
     marginLeft: 8,
-    color: "#9B9B9B",
+    color: "#2A2A2A",
     fontSize: 14,
+    paddingVertical: 0,
   },
   section: {
     gap: 10,
@@ -195,6 +225,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#2A2A2A",
+  },
+  emptyState: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#2A2A2A",
+  },
+  emptySubtitle: {
+    fontSize: 13,
+    color: "#9B9B9B",
   },
 });
 
