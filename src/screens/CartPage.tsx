@@ -96,7 +96,7 @@ export default function CartPage() {
         </View>
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Discount</Text>
-          <Text style={styles.summaryValue}>د.ت25,000</Text>
+          <Text style={styles.summaryValue}>د.ت2</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.summaryRow}>

@@ -136,8 +136,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       return sum + price * item.quantity;
     }, 0);
 
-  // Apply mock discount of 25,000 to subtotal.
-  const getCartTotal = () => getCartSubtotal() - 25000;
+  // Apply mock discount of 2 to subtotal.
+  const getCartTotal = () => getCartSubtotal() - 2;
 
   const value = useMemo(
     () => ({
