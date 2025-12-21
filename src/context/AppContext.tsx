@@ -9,6 +9,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CartItem, PRODUCTS } from "../data/data";
 import { useAuthStore } from "../store/authStore";
 
+// App-wide state container for favorites, cart, category filter, and login (auth comes from Zustand).
+// Context docs: https://reactnative.dev/docs/context | AsyncStorage: https://https://reactnative.directory/?search=storage
 type AppState = {
   favorites: string[];
   cart: CartItem[];
@@ -38,8 +40,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  // Login state comes from Zustand store (persisted separately).
   const { isLoggedIn, login, logout, hasHydrated } = useAuthStore();
 
+  // Hydrate favorites/cart once from AsyncStorage (best-effort, silent on failure).
   useEffect(() => {
     const hydrate = async () => {
       try {
@@ -60,14 +64,17 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     hydrate();
   }, []);
 
+  // Persist favorites whenever they change (AsyncStorage is key/value, string only).
   useEffect(() => {
     AsyncStorage.setItem("app_favorites", JSON.stringify(favorites)).catch(() => {});
   }, [favorites]);
 
+  // Persist cart whenever it changes.
   useEffect(() => {
     AsyncStorage.setItem("app_cart", JSON.stringify(cart)).catch(() => {});
   }, [cart]);
 
+  // Toggle product id in favorites list.
   const toggleFavorite = (productId: string) => {
     setFavorites((prev) =>
       prev.includes(productId)
@@ -76,6 +83,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  // Add item to cart; merge if same product/size/sugar already exists.
   const addToCart = (
     productId: string,
     size: CartItem["size"],
@@ -103,6 +111,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // Replace quantity for a product and drop zero/negative rows.
   const updateCartQuantity = (productId: string, quantity: number) => {
     setCart((prev) =>
       prev
@@ -119,6 +128,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const clearCart = () => setCart([]);
 
+  // Sum price * quantity using static PRODUCTS lookup; default to 0 if missing.
   const getCartSubtotal = () =>
     cart.reduce((sum, item) => {
       const product = PRODUCTS.find((p) => p.id === item.productId);
@@ -126,6 +136,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       return sum + price * item.quantity;
     }, 0);
 
+  // Apply mock discount of 25,000 to subtotal.
   const getCartTotal = () => getCartSubtotal() - 25000;
 
   const value = useMemo(

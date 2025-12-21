@@ -21,8 +21,7 @@ type Navigation = CompositeNavigationProp<
   NativeStackNavigationProp<PublicStackParamList>
 >;
 
-const formatPrice = (price: number) =>
-  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 
 export default function CartPage() {
   const navigation = useNavigation<Navigation>();
@@ -129,7 +128,8 @@ export default function CartPage() {
     </View>
   );
 }
-
+const formatPrice = (price: number) =>
+  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 const styles = StyleSheet.create({
   container: {
     flex: 1,

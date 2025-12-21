@@ -1,6 +1,0 @@
-        flex: 1,//container bech nkhalih yekho rest  mathalan flex 1 2 3 kifeh yaraf kifeh yaffecty yji ll co,tainer keno ala axe verticale ymchi yekhth height mta compostant wyaksmo ala ili moujoud fwesto mthalan hna ala 6 
-
-npx react-native run-android
- S C:\Users\ghofr\reactnativecli\AwesomeProject> npx react-native run-android
- app icon tjm tkoun care wla ronde fi android 
- objectif ecran de demarrage ino lapp takad tloadi wakt hwa thaher entretemps

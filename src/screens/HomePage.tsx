@@ -123,7 +123,7 @@ function HomePage() {
       ) : (
         <>
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Featured</Text>
+            <Text style={styles.sectionTitle}>our Products</Text>
             <FlatList
               data={featuredProducts}
               keyExtractor={(item) => item.id}
