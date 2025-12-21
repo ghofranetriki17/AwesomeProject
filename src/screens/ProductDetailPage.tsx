@@ -51,13 +51,7 @@ export default function ProductDetailPage() {
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.imageWrapper}>
           <Image source={{ uri: safeProduct.imageUrl }} style={styles.image} />
-          <TouchableOpacity
-            style={[styles.iconButton, styles.backButton]}
-            onPress={() => navigation.goBack()}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.iconText}>←</Text>
-          </TouchableOpacity>
+         
           <TouchableOpacity
             style={[styles.iconButton, styles.favoriteButton]}
             onPress={() => toggleFavorite(safeProduct.id)}
